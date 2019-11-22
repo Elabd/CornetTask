@@ -1,9 +1,21 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29318.209
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.902
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TodoList.Core", "TodoList.Core\TodoList.Core.csproj", "{07017767-37CF-4ABF-874C-A905F6F247EF}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{07017767-37CF-4ABF-874C-A905F6F247EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07017767-37CF-4ABF-874C-A905F6F247EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07017767-37CF-4ABF-874C-A905F6F247EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07017767-37CF-4ABF-874C-A905F6F247EF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
