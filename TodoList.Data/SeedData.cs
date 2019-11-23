@@ -5,7 +5,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using TodoList.Core;
 using TodoList.Core.Models;
-
 namespace TodoList.Data
 {
     public class SeedData
@@ -20,7 +19,6 @@ namespace TodoList.Data
                  .GetRequiredService<UserManager<ApplicationUser>>();
             await AddAdminRights(userManager);
         }
-
         private static async Task AddAdminRights(UserManager<ApplicationUser> userManager)
         {
             var adminExists = userManager.Users

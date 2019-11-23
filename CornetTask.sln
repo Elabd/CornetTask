@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.902
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TodoList.Core", "TodoList.Core\TodoList.Core.csproj", "{07017767-37CF-4ABF-874C-A905F6F247EF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TodoList.Core", "TodoList.Core\TodoList.Core.csproj", "{07017767-37CF-4ABF-874C-A905F6F247EF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TodoList.Data", "TodoList.Data\TodoList.Data.csproj", "{7EEA5883-B824-4B70-AD75-65222C81E15B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TodoList.Data", "TodoList.Data\TodoList.Data.csproj", "{7EEA5883-B824-4B70-AD75-65222C81E15B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TodoList.Web", "TodoList.Web\TodoList.Web.csproj", "{239A55BE-91FA-4C85-A73D-09ADDEE925D7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TodoList.Web", "TodoList.Web\TodoList.Web.csproj", "{78AB911B-83EC-4521-A897-630507ECF26F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{7EEA5883-B824-4B70-AD75-65222C81E15B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7EEA5883-B824-4B70-AD75-65222C81E15B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7EEA5883-B824-4B70-AD75-65222C81E15B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{239A55BE-91FA-4C85-A73D-09ADDEE925D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{239A55BE-91FA-4C85-A73D-09ADDEE925D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{239A55BE-91FA-4C85-A73D-09ADDEE925D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{239A55BE-91FA-4C85-A73D-09ADDEE925D7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{78AB911B-83EC-4521-A897-630507ECF26F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78AB911B-83EC-4521-A897-630507ECF26F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78AB911B-83EC-4521-A897-630507ECF26F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78AB911B-83EC-4521-A897-630507ECF26F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
