@@ -1,30 +1,49 @@
 @using TodoList.Core.Models
-
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
+@if (SignInManager.IsSignedIn(User))
+{
 
-<ul class="navbar-nav">
-    @if (SignInManager.IsSignedIn(User))
+    using (Html.BeginForm("Logout", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
     {
-        <li class="nav-item">
-            <a asp-area="" asp-controller="ToDos" asp-action="Index" class="nav-link">My ToDos</a>
-        </li>
-        <li class="nav-item">
-            @*<a class="nav-link text-dark" asp-area="" asp-controller="Account" title="Manage">Hello @User.Identity.Name!</a>*@
-        </li>
-        <li class="nav-item">
-            <form class="form-inline" asp-area="" asp-controller="Account" asp-action="Logout" asp-route-returnUrl="@Url.Action("Home", "ToDos", new { area = "" })">
-                <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
-            </form>
-        </li>
+        @Html.AntiForgeryToken()
+
+        <ul class="nav navbar-nav navbar-right">
+            <li class="notifications">
+                <a href="#">
+                    <i class="glyphicon glyphicon-globe"></i>
+                    <span class="badge js-notifications-count hide"></span>
+                </a>
+            </li>
+            <li>
+                <a asp-area="" asp-controller="ToDos" asp-action="Index">My ToDos</a>
+            </li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@UserManager.GetUserName(User) <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a asp-area="" asp-controller="ToDos" asp-action="Index">My ToDos</a>
+                    </li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+
+                </ul>
+            </li>
+
+        </ul>
+
     }
-    else
-    {
-        <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Register">Register</a>
+
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right">
+
+        <li>
+            <a asp-area="" asp-controller="Account" asp-action="Register">Register</a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Login">Login</a>
+        <li>
+            <a asp-area="" asp-controller="Account" asp-action="Login">Login</a>
         </li>
-    }
-</ul>
+    </ul>
+}

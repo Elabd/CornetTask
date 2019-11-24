@@ -14,13 +14,13 @@ namespace TodoList.Core.Contexts
         }
 
         public DbSet<TodoItem> ToDos { get; set; }
+        public DbSet<UserNotification> UserNotifications { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
             builder.Entity<TodoItem>().ToTable("Todo");
             builder.Entity<FileInfo>().ToTable("File");
-
         }
         public void ApplyMigrations(ApplicationDbContext context)
         {

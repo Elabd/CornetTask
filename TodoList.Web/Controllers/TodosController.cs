@@ -141,12 +141,13 @@ namespace TodoList.Web.Controllers
                 .GetItemAsync(id);
             if (todo == null) return NotFound();
 
+          //  var imagePath =todo.File==null?null : Path.GetFileName(todo.File.Path);
             var editViewModel = new EditViewModel()
             {
                 Id = todo.Id,
                 Title = todo.Title,
                 Content = todo.Content,
-                ImagePath = Path.GetFileName(todo.File.Path)
+                ImagePath = Path.GetFileName(todo.File?.Path)
             };
             return View(editViewModel);
         }
@@ -208,7 +209,7 @@ namespace TodoList.Web.Controllers
                 Title = todo.Title,
                 //  FilePath = todo.ImagePath
             };
-            ViewData["FileName"] = Path.GetFileName(todo.File.Path);
+            ViewData["FileName"] = Path.GetFileName(todo.File?.Path);
             return View(deleteViewModel);
         }
 

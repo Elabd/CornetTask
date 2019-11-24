@@ -129,5 +129,41 @@ namespace TodoList.Core.Services
             var changes = await _context.SaveChangesAsync();
             return changes > 0;
         }
+
+        public async Task<bool> MarkAsReadAsync(ApplicationUser currentUser)
+        {
+            var userId = currentUser.Id;
+            var notifications = _context.UserNotifications
+                .Where(un => un.User.Id == userId && !un.IsRead).ToList();
+
+
+            notifications.ForEach(n => n.Read());
+
+            var changes = await _context.SaveChangesAsync();
+            return changes > 0;
+        }
+
+        public async Task<IEnumerable<UserNotification>> GetNewNotificationsAsync(ApplicationUser currentUser)
+        {
+
+            var userId = currentUser.Id;
+            return await _context.UserNotifications.Include(un => un.Notification)
+                .Where(un => un.User.Id == userId && !un.IsRead).ToArrayAsync();
+        }
+
+        public async Task<bool> AddNotification(ApplicationUser currentUser, TodoItem todoItem)
+        {
+            var flag = _context.UserNotifications.Any(un => un.Notification.TodoItem.Id == todoItem.Id);
+            if (!flag)
+            {
+                await _context.UserNotifications.AddAsync(new UserNotification
+                {
+                    Notification = new Notification { TodoItem = todoItem },
+                    User = currentUser
+                });
+            }
+            var changes = await _context.SaveChangesAsync();
+            return changes > 0;
+        }
     }
 }

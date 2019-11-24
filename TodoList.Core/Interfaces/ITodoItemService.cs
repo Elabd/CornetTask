@@ -18,6 +18,8 @@ namespace TodoList.Core.Interfaces
         Task<IEnumerable<TodoItem>> GetRecentlyAddedItemsAsync(ApplicationUser currentUser);
         Task<IEnumerable<TodoItem>> GetDueTo2DaysItems(ApplicationUser user);
         Task<bool> SaveFileAsync(Guid todoId, ApplicationUser currentUser, string path, long size);
-
+        Task<bool> MarkAsReadAsync(ApplicationUser currentUser);
+        Task<IEnumerable<UserNotification>> GetNewNotificationsAsync(ApplicationUser currentUser);
+        Task<bool> AddNotification(ApplicationUser currentUser, TodoItem todoItem);
     }
 }

@@ -195,6 +195,23 @@ namespace TodoList.Data.Migrations
                     b.ToTable("File");
                 });
 
+            modelBuilder.Entity("TodoList.Core.Models.Notification", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("DateTime");
+
+                    b.Property<Guid>("TodoItemId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TodoItemId");
+
+                    b.ToTable("Notification");
+                });
+
             modelBuilder.Entity("TodoList.Core.Models.TodoItem", b =>
                 {
                     b.Property<Guid>("Id")
@@ -226,6 +243,27 @@ namespace TodoList.Data.Migrations
                     b.HasIndex("FileTodoId");
 
                     b.ToTable("Todo");
+                });
+
+            modelBuilder.Entity("TodoList.Core.Models.UserNotification", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("IsRead");
+
+                    b.Property<int?>("NotificationId");
+
+                    b.Property<string>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NotificationId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserNotifications");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -273,11 +311,30 @@ namespace TodoList.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("TodoList.Core.Models.Notification", b =>
+                {
+                    b.HasOne("TodoList.Core.Models.TodoItem", "TodoItem")
+                        .WithMany()
+                        .HasForeignKey("TodoItemId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("TodoList.Core.Models.TodoItem", b =>
                 {
                     b.HasOne("TodoList.Core.Models.FileInfo", "File")
                         .WithMany()
                         .HasForeignKey("FileTodoId");
+                });
+
+            modelBuilder.Entity("TodoList.Core.Models.UserNotification", b =>
+                {
+                    b.HasOne("TodoList.Core.Models.Notification", "Notification")
+                        .WithMany()
+                        .HasForeignKey("NotificationId");
+
+                    b.HasOne("TodoList.Core.Models.ApplicationUser", "User")
+                        .WithMany("UserNotifications")
+                        .HasForeignKey("UserId");
                 });
 #pragma warning restore 612, 618
         }
