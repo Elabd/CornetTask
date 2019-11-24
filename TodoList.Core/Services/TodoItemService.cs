@@ -16,15 +16,19 @@ namespace TodoList.Core.Services
         {
             _context = context;
         }
-        public async Task<bool> AddItemAsync(TodoItem todo, ApplicationUser user)
+        public async Task<string> AddItemAsync(TodoItem todo, ApplicationUser user)
         {
             todo.Id = Guid.NewGuid();
             todo.Done = false;
             todo.UserId = user.Id;
-            todo.ImagePath = todo.ImagePath;
-            _context.ToDos.Add(todo);
+            todo.File = new FileInfo
+            {
+                TodoId = todo.Id,
+                Path = "",
+                Size = 0
+            }; _context.ToDos.Add(todo);
             var saved = await _context.SaveChangesAsync();
-            return saved > 0;
+            return saved > 0 ? todo.Id.ToString() : "";
         }
 
         public async Task<IEnumerable<TodoItem>> GetIncompleteItemsAsync(ApplicationUser user)
@@ -108,6 +112,22 @@ namespace TodoList.Core.Services
                 .Where(t => t.UserId == user.Id && !t.Done
                 && DateTime.Compare(DateTime.Now.AddDays(1), t.DueToDateTime) >= 0)
                 .ToArrayAsync();
+        }
+
+        public async Task<bool> SaveFileAsync(Guid todoId, ApplicationUser currentUser, string path, long size)
+        {
+            var todo = await _context.ToDos.Include(t => t.File)
+                .Where(t => t.Id == todoId && t.UserId == currentUser.Id)
+                .SingleOrDefaultAsync();
+
+            if (todo == null) return false;
+
+            todo.File.Path = path;
+            todo.File.Size = size;
+            todo.File.TodoId = todo.Id;
+
+            var changes = await _context.SaveChangesAsync();
+            return changes > 0;
         }
     }
 }

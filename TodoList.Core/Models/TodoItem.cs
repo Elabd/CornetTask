@@ -20,7 +20,7 @@ namespace TodoList.Core.Models
         public string Content { get; set; }
         public bool Done { get; set; }
         [MaxLength(500)]
-        public string ImagePath { get; set; }
+        public FileInfo File { get; set; }
         [DataType(DataType.DateTime)]
         [Column("Added")]
         public DateTime AddedDateTime { get; set; }

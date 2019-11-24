@@ -13,13 +13,16 @@ namespace TodoList.Web.Controllers
     public class ToDosController : Controller
     {
         private readonly ITodoItemService _todoItemService;
+        private readonly IFileStorageService _fileStorageService;
+
         private readonly UserManager<ApplicationUser> _userManager;
 
         public ToDosController(ITodoItemService todoItemService,
-            UserManager<ApplicationUser> userManager)
+            UserManager<ApplicationUser> userManager, IFileStorageService fileStorageService)
         {
             _todoItemService = todoItemService;
             _userManager = userManager;
+            _fileStorageService = fileStorageService;
         }
         public async Task<IActionResult> Home()
         {
@@ -83,27 +86,43 @@ namespace TodoList.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Title,Content,DuetoDateTime,Tags")]TodoItemCreateViewModel todo)
+        public async Task<IActionResult> Create([Bind("Title,Content,DuetoDateTime,File")]TodoItemCreateViewModel todo)
         {
             if (!ModelState.IsValid)
             {
                 return RedirectToAction("Index");
             }
-
             var currentUser = await _userManager.GetUserAsync(User);
             if (currentUser == null) return Challenge();
-
             var todoItem = new TodoItem
             {
                 Title = todo.Title,
                 Content = todo.Content,
                 DueToDateTime = todo.DuetoDateTime,
-                ImagePath = todo.ImagePath
-            };
-            var successful = await _todoItemService
-                .AddItemAsync(todoItem, currentUser);
 
-            if (!successful)
+            };
+            var file = todo.File;
+
+            var todoId = await _todoItemService
+                .AddItemAsync(todoItem, currentUser);
+            if (file != null)
+            {
+                var path = todoId + "//" + file.FileName;
+
+                await _fileStorageService.CleanDirectoryAsync(todoId);
+
+                var saved = await _fileStorageService.SaveFileAsync(path, file.OpenReadStream());
+
+                if (!saved)
+                    return BadRequest("Couldn't create or replace file");
+
+                var succeeded = await _todoItemService.SaveFileAsync(Guid.Parse(todoId), currentUser, path, file.Length);
+
+                if (!succeeded)
+                    return BadRequest("Couldn't create or replace file");
+            }
+
+            if (string.IsNullOrEmpty(todoId))
             {
                 return BadRequest(new { error = "Could not add item." });
             }
@@ -127,8 +146,7 @@ namespace TodoList.Web.Controllers
                 Id = todo.Id,
                 Title = todo.Title,
                 Content = todo.Content,
-                ImagePath = todo.ImagePath
-
+                ImagePath = Path.GetFileName(todo.File.Path)
             };
             return View(editViewModel);
         }
@@ -150,7 +168,6 @@ namespace TodoList.Web.Controllers
                     Id = todo.Id,
                     Title = todo.Title,
                     Content = todo.Content,
-                    ImagePath = todo.ImagePath
                 }, currentUser);
 
             if (!successful)
@@ -173,7 +190,7 @@ namespace TodoList.Web.Controllers
                 .GetItemAsync(id);
             if (todo == null) return NotFound();
 
-            ViewData["FileName"] = todo.ImagePath;
+            // ViewData["FileName"] = todo.ImagePath;
             return View(todo);
         }
 
@@ -189,9 +206,9 @@ namespace TodoList.Web.Controllers
             {
                 Id = todo.Id,
                 Title = todo.Title,
-                FilePath = todo.ImagePath
+                //  FilePath = todo.ImagePath
             };
-            ViewData["FileName"] = Path.GetFileName(todo.ImagePath);
+            ViewData["FileName"] = Path.GetFileName(todo.File.Path);
             return View(deleteViewModel);
         }
 

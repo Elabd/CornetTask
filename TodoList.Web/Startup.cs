@@ -27,6 +27,7 @@ namespace TodoList.Web
             services.ConfigureCookiePolicy();
             services.ConfigureEntityFramework(Configuration);
             services.ConfigureIdentity();
+            services.ConfigureStorage(Configuration);
             services.ConfigureServices();
             services.AddLogging();
             services.AddMvc()

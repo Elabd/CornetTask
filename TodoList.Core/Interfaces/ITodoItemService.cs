@@ -9,7 +9,7 @@ namespace TodoList.Core.Interfaces
     {
         Task<IEnumerable<TodoItem>> GetIncompleteItemsAsync(ApplicationUser currentUser);
         Task<IEnumerable<TodoItem>> GetCompleteItemsAsync(ApplicationUser currentUser);
-        Task<bool> AddItemAsync(TodoItem todo, ApplicationUser currentUser);
+        Task<string> AddItemAsync(TodoItem todo, ApplicationUser currentUser);
         Task<bool> UpdateDoneAsync(Guid id, ApplicationUser currentUser);
         bool Exists(Guid id);
         Task<bool> UpdateTodoAsync(TodoItem todo, ApplicationUser currentUser);
@@ -17,5 +17,7 @@ namespace TodoList.Core.Interfaces
         Task<bool> DeleteTodoAsync(Guid id, ApplicationUser currentUser);
         Task<IEnumerable<TodoItem>> GetRecentlyAddedItemsAsync(ApplicationUser currentUser);
         Task<IEnumerable<TodoItem>> GetDueTo2DaysItems(ApplicationUser user);
+        Task<bool> SaveFileAsync(Guid todoId, ApplicationUser currentUser, string path, long size);
+
     }
 }

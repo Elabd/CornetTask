@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace TodoList.Web.Models.TodoViewModel
@@ -17,7 +18,7 @@ namespace TodoList.Web.Models.TodoViewModel
 
         [DataType(DataType.DateTime)]
         public DateTime DuetoDateTime { get; set; }
-
-        public string ImagePath { get; set; }
+        public IFormFile File { get; set; }
     }
+
 }

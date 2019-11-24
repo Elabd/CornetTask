@@ -1,56 +1,51 @@
 ﻿@model TodoList.Core.Models.TodoItem
-
 @{
     ViewData["Title"] = "Details";
 }
-
-<h1>Details</h1>
-
 <div>
-    <h4>TodoItem</h4>
+    <h4>Todo</h4>
     <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.UserId)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.UserId)
-        </dd>
-        <dt class = "col-sm-2">
+    <dl class="dl-horizontal form-group">
+        <dt>
             @Html.DisplayNameFor(model => model.Title)
         </dt>
-        <dd class = "col-sm-10">
+        <dd>
             @Html.DisplayFor(model => model.Title)
         </dd>
-        <dt class = "col-sm-2">
+        <dt>
             @Html.DisplayNameFor(model => model.Content)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Content)
+        <dd>
+            <markdown markdown="Content"></markdown>
         </dd>
-        <dt class = "col-sm-2">
+        <dt>
             @Html.DisplayNameFor(model => model.Done)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Done)
+        <dd>
+            @(Model.Done ? "Yes" : "No")
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ImagePath)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ImagePath)
-        </dd>
-        <dt class = "col-sm-2">
+        <dt>
             @Html.DisplayNameFor(model => model.AddedDateTime)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.AddedDateTime)
+        <dd>
+            <span data-value="@Model.AddedDateTime" class="timeStampValue">
+                @Model.AddedDateTime
+            </span>
         </dd>
-        <dt class = "col-sm-2">
+        <dt>
             @Html.DisplayNameFor(model => model.DueToDateTime)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DueToDateTime)
+        <dd>
+            <span data-value="@Model.DueToDateTime" class="timeStampValue">
+                @Model.DueToDateTime
+            </span>
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.File)
+        </dt>
+        <dd>
+            @ViewData["FileName"]
         </dd>
     </dl>
 </div>
